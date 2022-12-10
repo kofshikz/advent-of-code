@@ -7,17 +7,21 @@ import (
 	"strings"
 )
 
-var moveScore int
-var totalScore int
-var correctMoveScore int
-var correctTotalScore int
+var (
+	moveScore         int
+	totalScore        int
+	correctMoveScore  int
+	correctTotalScore int
+)
 
-const drawScore = 3
-const winScore = 6
-const lossScore = 0
-const rockScore = 1
-const paperScore = 2
-const scissorsScore = 3
+const (
+	drawScore     = 3
+	winScore      = 6
+	lossScore     = 0
+	rockScore     = 1
+	paperScore    = 2
+	scissorsScore = 3
+)
 
 func main() {
 	content, err := os.ReadFile("input.txt")
@@ -28,15 +32,14 @@ func main() {
 	allRounds := strings.Split(allMoves, "\n")
 	for i := 0; i < len(allRounds); i++ {
 		theMoves := strings.Split(allRounds[i], " ")
+		// Part 1
 		moveScore = yourScore(theMoves[1]) + currentPlay(theMoves[1], theMoves[0])
 		totalScore += moveScore
+		// Part 2
 		correctMoveScore = yourScore(neededResult(theMoves[1], theMoves[0])) + currentPlay(neededResult(theMoves[1], theMoves[0]), theMoves[0])
 		correctTotalScore += correctMoveScore
 	}
-	// Part 1
-	fmt.Println(totalScore)
-	// Part 2
-	fmt.Println(correctTotalScore)
+	fmt.Printf("At first you thought you would have %d points, but actually, the number is %d", totalScore, correctTotalScore)
 }
 func yourScore(yourMove string) int {
 	switch yourMove {
